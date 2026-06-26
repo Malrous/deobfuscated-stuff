@@ -1,40 +1,40 @@
-local v1 = loadstring(game:HttpGet('https://raw.githubusercontent.com/SkireScripts/F3X-Panel/main/Panel.lua'))()
-local _Players = game:GetService('Players')
-local _RunService = game:GetService('RunService')
-local u4 = _Players.LocalPlayer.Character or _Players.LocalPlayer.CharacterAdded:Wait()
-local u5 = nil
+local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/SkireScripts/F3X-Panel/main/Panel.lua'))()
+local Players = game:GetService('Players')
+local RunService = game:GetService('RunService')
+local character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
+local ServerEndpoint = nil
 local u6 = {
     ['loop kill'] = false,
     ['loop tools'] = false,
     burn = false,
 }
-local v7 = v1:Window({
+local Window = Library:Window({
     Name = 'F3X Panel',
     Title = '<font color="#ffb31a">F3X</font> Panel',
     Hidden = false,
     Key = Enum.KeyCode.Insert,
 })
-local v8 = v7:AddTab({
+local v8 = Window:AddTab({
     Name = 'Builds',
     Icon = '7072706318',
     Selected = true,
 })
-local v9 = v7:AddTab({
+local v9 = Window:AddTab({
     Name = 'Grief',
     Icon = '7072723685',
     Selected = false,
 })
-local v10 = v7:AddTab({
+local v10 = Window:AddTab({
     Name = 'Maps',
     Icon = '7072718631',
     Selected = false,
 })
-local v11 = v7:AddTab({
+local v11 = Window:AddTab({
     Name = 'Players',
     Icon = '7072724538',
     Selected = false,
 })
-local v12 = v7:AddTab({
+local v12 = Window:AddTab({
     Name = 'Credits',
     Icon = '7072724538',
     Selected = false,
@@ -42,8 +42,8 @@ local v12 = v7:AddTab({
 
 local function u22()
     pcall(function()
-        if u4 then
-            local v13 = u4
+        if character then
+            local v13 = character
             local v14, v15, v16 = pairs(v13:GetDescendants())
 
             while true do
@@ -55,12 +55,12 @@ local function u22()
                     break
                 end
                 if v17.Name == 'SyncAPI' then
-                    u5 = v17:FindFirstChildWhichIsA('RemoteFunction')
+                    ServerEndpoint = v17:FindFirstChildWhichIsA('RemoteFunction')
                 end
             end
 
-            if not u5 then
-                local v18, v19, v20 = pairs(_Players.LocalPlayer.Backpack:GetDescendants())
+            if not ServerEndpoint then
+                local v18, v19, v20 = pairs(Players.LocalPlayer.Backpack:GetDescendants())
 
                 while true do
                     local v21
@@ -71,7 +71,7 @@ local function u22()
                         break
                     end
                     if v21.Name == 'SyncAPI' then
-                        u5 = v21:FindFirstChildWhichIsA('RemoteFunction')
+                        ServerEndpoint = v21:FindFirstChildWhichIsA('RemoteFunction')
                     end
                 end
             end
@@ -79,15 +79,15 @@ local function u22()
     end)
 end
 
-_RunService.Stepped:Connect(function()
+RunService.Stepped:Connect(function()
     u22()
 end)
-_Players.LocalPlayer.CharacterAdded:Connect(function(_)
-    u5 = nil
+Players.LocalPlayer.CharacterAdded:Connect(function(_)
+    ServerEndpoint = nil
 end)
 
 local function u29(p23)
-    local v24 = _Players
+    local v24 = Players
     local v25, v26, v27 = pairs(v24:GetPlayers())
 
     while true do
@@ -109,10 +109,10 @@ local function u29(p23)
     return nil
 end
 local function u43(p30)
-    if p30 and u5 then
+    if p30 and ServerEndpoint then
         if typeof(p30) == 'string' then
             if p30 == 'others' then
-                local v31 = _Players
+                local v31 = Players
                 local v32, v33, v34 = pairs(v31:GetPlayers())
                 local u35 = {}
 
@@ -124,16 +124,16 @@ local function u43(p30)
                     if v34 == nil then
                         break
                     end
-                    if v36 ~= _Players.LocalPlayer then
+                    if v36 ~= Players.LocalPlayer then
                         u35[#u35 + 1] = v36.Character.Head
                     end
                 end
 
                 pcall(function()
-                    u5:InvokeServer('Remove', u35)
+                    ServerEndpoint:InvokeServer('Remove', u35)
                 end)
             elseif p30 == 'all' then
-                local v37 = _Players
+                local v37 = Players
                 local v38, v39, v40 = pairs(v37:GetPlayers())
                 local u41 = {}
 
@@ -150,12 +150,12 @@ local function u43(p30)
                 end
 
                 pcall(function()
-                    u5:InvokeServer('Remove', u41)
+                    ServerEndpoint:InvokeServer('Remove', u41)
                 end)
             end
         else
             pcall(function()
-                u5:InvokeServer('Remove', {
+                ServerEndpoint:InvokeServer('Remove', {
                     p30.Character.Head,
                 })
             end)
@@ -163,10 +163,10 @@ local function u43(p30)
     end
 end
 local function u82(p44)
-    if p44 and u5 then
+    if p44 and ServerEndpoint then
         if typeof(p44) == 'string' then
             if p44 == 'others' then
-                local v45 = _Players
+                local v45 = Players
                 local v46, v47, v48 = pairs(v45:GetPlayers())
                 local u49 = {}
 
@@ -178,7 +178,7 @@ local function u82(p44)
                     if v48 == nil then
                         break
                     end
-                    if v50 ~= _Players.LocalPlayer then
+                    if v50 ~= Players.LocalPlayer then
                         local v51, v52, v53 = pairs(v50.Character:GetChildren())
 
                         while true do
@@ -212,10 +212,10 @@ local function u82(p44)
                 end
 
                 pcall(function()
-                    u5:InvokeServer('Remove', u49)
+                    ServerEndpoint:InvokeServer('Remove', u49)
                 end)
             elseif p44 == 'all' then
-                local v59 = _Players
+                local v59 = Players
                 local v60, v61, v62 = pairs(v59:GetPlayers())
                 local u63 = {}
 
@@ -260,7 +260,7 @@ local function u82(p44)
                 end
 
                 pcall(function()
-                    u5:InvokeServer('Remove', u63)
+                    ServerEndpoint:InvokeServer('Remove', u63)
                 end)
             end
         else
@@ -296,13 +296,13 @@ local function u82(p44)
             end
 
             pcall(function()
-                u5:InvokeServer('Remove', u76)
+                ServerEndpoint:InvokeServer('Remove', u76)
             end)
         end
     end
 end
 local function u84(p83)
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/SkireScripts/F3X-Panel/main/buildloader.lua'))():LoadBuild(p83, u5)
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/SkireScripts/F3X-Panel/main/buildloader.lua'))():LoadBuild(p83, ServerEndpoint)
 end
 
 local _Basic = v8:Section('Basic')
@@ -369,7 +369,7 @@ _Grief:Toggle({
                 end
             end
 
-            u5:InvokeServer('CreateDecorations', v96)
+            ServerEndpoint:InvokeServer('CreateDecorations', v96)
         end
     end,
 })
@@ -392,7 +392,7 @@ _Grief:Button({
             end
         end
 
-        u5:InvokeServer('Remove', v102)
+        ServerEndpoint:InvokeServer('Remove', v102)
     end,
 })
 _Grief:Label('Troll')
@@ -410,7 +410,7 @@ _Grief:Button({
             if v106 == nil then
                 break
             end
-            if not _Players:GetPlayerFromCharacter(v108:FindFirstAncestorWhichIsA('Model')) and (v108:IsA('Part') or (v108:IsA('SpawnLocation') or (v108:IsA('WedgePart') or (v108:IsA('CornerWedgePart') or (v108:IsA('TrussPart') or (v108:IsA('Seat') or (v108:IsA('MeshPart') or v108:IsA('VehicleSeat')))))))) then
+            if not Players:GetPlayerFromCharacter(v108:FindFirstAncestorWhichIsA('Model')) and (v108:IsA('Part') or (v108:IsA('SpawnLocation') or (v108:IsA('WedgePart') or (v108:IsA('CornerWedgePart') or (v108:IsA('TrussPart') or (v108:IsA('Seat') or (v108:IsA('MeshPart') or v108:IsA('VehicleSeat')))))))) then
                 v107[#v107 + 1] = {
                     Anchored = false,
                     Part = v108,
@@ -418,7 +418,7 @@ _Grief:Button({
             end
         end
 
-        u5:InvokeServer('SyncAnchor', v107)
+        ServerEndpoint:InvokeServer('SyncAnchor', v107)
     end,
 })
 _Grief:Input({
@@ -454,8 +454,8 @@ _Grief:Button({
             end
         end
 
-        u5:InvokeServer('CreateTextures', v113)
-        u5:InvokeServer('SyncTexture', v113)
+        ServerEndpoint:InvokeServer('CreateTextures', v113)
+        ServerEndpoint:InvokeServer('SyncTexture', v113)
     end,
 })
 
