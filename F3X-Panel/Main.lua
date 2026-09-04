@@ -307,7 +307,7 @@ local function RemovePlayerTools(target)
 end
 
 local function LoadBuildFromUrl(buildUrl)
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/SkireScripts/F3X-Panel/main/buildloader.lua'))():LoadBuild(buildUrl, ServerEndpoint)
+    loadstring(game:HttpGet('https://github.com/Malrous/deobfuscated-stuff/raw/refs/heads/main/F3X-Panel/buildloader.lua'))():LoadBuild(buildUrl, ServerEndpoint)
 end
 
 local BasicSection = BuildsTab:Section('Basic')
