@@ -1,5 +1,3 @@
--- deobfuscated and renamed using malbot
-
 local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/SkireScripts/F3X-Panel/main/Panel.lua'))()
 local Players = game:GetService('Players')
 local RunService = game:GetService('RunService')
